@@ -1,1 +1,25 @@
-config.yml
+# 設定檔 (包含敏感帳密，不提交至 GitHub/雲端)
+config/config.yaml
+config/*.yaml
+!config/config.example.yaml
+
+# 執行階段資料與紀錄
+data/
+*.csv
+*.txt
+history.json
+status.csv
+
+# Python 暫存與環境檔案
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv/
+env/
+venv/
+
+# 系統暫存檔
+.DS_Store
+.vscode/
+.idea/
