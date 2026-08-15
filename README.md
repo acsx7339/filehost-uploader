@@ -99,3 +99,23 @@ docker-compose logs -f
    # 請依實際路徑執行測試腳本，如在專案根目錄下
    python3 <本機測試腳本路徑>/test_uploader.py
    ```
+
+
+## 0. 事前準備與規劃事項
+
+在開始實作與部署系統前，請確保完成以下準備工作：
+
+* [ ] **1. 平台帳號與憑證申請**
+  * **KatFile 帳號**：需註冊帳戶，並於後台啟用 PPD 分潤模式，取得 FTP 上傳密碼與 [API 金鑰](https://katfile.com/?op=my_account)。
+  * **Rapidgator 帳號**：需註冊帳戶，啟用分潤模式，取得 FTP 上傳密碼與 API 呼叫權限。
+* [ ] **2. NAS 目錄結構建立**
+  * 在 NAS 上建立專案根目錄：`/share/CACHEDEV1_DATA/Container/nas-auto-uploader`。
+  * 在其下建立子目錄：
+    * `watch` (暫存監控區)
+    * `completed` (上傳完成歸檔區)
+    * `config` (放置系統設定檔)
+    * `data` (放置產出的連結紀錄檔)
+* [ ] **3. NAS 權限設定**
+  * 確保運行 Docker 的系統使用者對上述資料夾擁有完整的**讀取與寫入 (R/W) 權限**，避免容器內程式因權限不足無法移動檔案或寫入 `links.txt`。
+* [ ] **4. 網路連線確認**
+  * 確認 NAS 的防火牆與外部連線設定，允許對外連接 `ftp.katfile.com` 與 `upload.rapidgator.net` 的 FTP 傳輸埠 (Port 21)，以及 HTTPS 的 API 呼叫。

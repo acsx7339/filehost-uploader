@@ -8,6 +8,7 @@ from datetime import datetime, date
 from ftplib import FTP
 import requests
 import yaml
+from csv_exporter import export_to_csv
 
 # 設定日誌格式
 logging.basicConfig(
@@ -388,6 +389,14 @@ def process_file(file_path, config, history):
         
         # 寫入文字紀錄
         write_link_to_txt(filename, kat_link, rg_link)
+        
+        # 寫入 CSV 發文紀錄
+        csv_path = config.get("system", {}).get("csv_export_path", "/app/data/posts.csv")
+        post_template = config.get("csv", {}).get("post_template", "")
+        if post_template:
+            export_to_csv(csv_path, filename, file_size, kat_link, rg_link, post_template)
+        else:
+            logger.warning(f"尚未設定 CSV 發文模板 (csv.post_template)，跳過寫入 CSV: {filename}")
         
         # 移動檔案到已完成目錄
         completed_dir = config["system"]["completed_dir"]
