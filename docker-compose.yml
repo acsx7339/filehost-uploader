@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  nas-uploader:
+    build: .
+    container_name: nas-uploader
+    restart: unless-stopped
+    volumes:
+      # NAS 實體路徑對應
+      - /share/CACHEDEV1_DATA/Container/nas-auto-uploader/watch:/watch
+      - /share/CACHEDEV1_DATA/Container/nas-auto-uploader/completed:/completed
+      - /share/CACHEDEV1_DATA/Container/nas-auto-uploader/config:/app/config
+      - /share/CACHEDEV1_DATA/Container/nas-auto-uploader/data:/app/data
+      - /share/CACHEDEV1_DATA/Container/nas-auto-uploader/src:/app/src
+    environment:
+      - TZ=Asia/Taipei
+      - PYTHONUNBUFFERED=1
+
